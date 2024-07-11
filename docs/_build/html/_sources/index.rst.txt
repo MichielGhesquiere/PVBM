@@ -92,37 +92,36 @@ We have included an optic disc segmenter to perform more accurate VBM estimation
    segmentation_path = '../PVBM_datasets/INSPIRE/images/image13.png'
    optic_disc = segmenter.segment(str(segmentation_path))
 
-
 Geometrical VBMs
-=================
+================
 
 .. code-block:: python
-   ### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
 
-   from PVBM.GeometryAnalysis import GeometricalVBMs #Import the geometry analysis module
-   #Preprocessing and roi extraction
+   ### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
+   from PVBM.GeometryAnalysis import GeometricalVBMs # Import the geometry analysis module
+   # Preprocessing and roi extraction
    blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
-   segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
+   segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 # Open the segmentation
    skeleton = skeletonize(segmentation)*1
    segmentation_roi = segmentation * (1-zones_ABC[:,:,1]/255)
    segmentation_roi = segmentation_roi * roi[:,:,1]/255
    skeleton_roi = skeleton * (1-zones_ABC[:,:,1]/255)
    skeleton_roi = skeleton_roi * roi[:,:,1]/255
 
-   geometricalVBMs = GeometricalVBMs() #Instanciate a geometrical VBM object
+   geometricalVBMs = GeometricalVBMs() # Instantiate a geometrical VBM object
    vbms, visual = geometricalVBMs.compute_geomVBMs(segmentation_roi, skeleton_roi, center[0], center[1], radius)
    area, TI, medTor, ovlen, medianba, startp, endp, interp = vbms
 
 Fractal Analysis
-=================
+================
 
 .. code-block:: python
-   ### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
 
+   ### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
    from PVBM.FractalAnalysis import MultifractalVBMs
-   #Preprocessing and roi extraction
+   # Preprocessing and roi extraction
    blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
-   segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
+   segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 # Open the segmentation
    segmentation_roi = segmentation * (1-zones_ABC[:,:,1]/255)
    segmentation_roi = segmentation_roi * roi[:,:,1]/255
 
@@ -131,29 +130,30 @@ Fractal Analysis
 
 Central Retinal Equivalent Analysis
 ===================================
-.. code-block:: python
-   ### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
 
+.. code-block:: python
+
+   ### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
    from PVBM.CentralRetinalAnalysis import CREVBMs
-   #Preprocessing and roi extraction
+   # Preprocessing and roi extraction
    zone_A_ = zones_ABC[:,:,1]/255
    zone_B_ = zones_ABC[:,:,0]/255
    zone_C_ = zones_ABC[:,:,2]/255
    roi = (zone_C_ - zone_B_)
    creVBMs = CREVBMs()
 
-   ####Artery
+   #### Artery
    blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
-   segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
+   segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 # Open the segmentation
    skeleton = skeletonize(segmentation)*1
    segmentation_roi = (segmentation * roi)
    skeleton_roi = (skeleton * roi)
    out = creVBMs.compute_central_retinal_equivalents(segmentation_roi.copy(), skeleton_roi.copy(),center[0],center[1], radius, artery = True, Toplot = True )
    craek, craeh = out["craek"], out["craeh"]
 
-   ####Veins
+   #### Veins
    blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/veins/image13.png'
-   segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
+   segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 # Open the segmentation
    skeleton = skeletonize(segmentation)*1
    segmentation_roi = (segmentation * roi)
    skeleton_roi = (skeleton * roi)
