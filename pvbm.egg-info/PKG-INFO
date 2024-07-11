@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pvbm
-Version: 2.9.1
+Version: 2.9.2
 Summary: Python Vasculature Biomarker toolbox
 Home-page: https://github.com/aim-lab/PVBM
 Author: Jonathan Fhima, Yevgeniy Men
@@ -37,7 +37,7 @@ Requires-Dist: opencv-python
   <a>Joachim A. Behar</a>
 </p>
 
-![Pipeline](https://github.com/aim-lab/PVBM/blob/main/figures/pipeline.png)
+![Pipeline](https://raw.githubusercontent.com/aim-lab/PVBM/main/figures/pipeline.png)
 
 ### Installation
 
