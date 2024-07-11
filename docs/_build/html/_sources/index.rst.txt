@@ -76,6 +76,22 @@ Fifteen biomarkers have been engineered independently on the arterioles and venu
 
 Look at the `tutorial <https://github.com/aim-lab/PVBM/blob/main/pvbmtutorial.ipynb>`_ for a code example.
 
+Artery/Veins Blood Vessel Segmentation Datasets
+===============================================
+
+You can access the external test set used in the LUNet paper directly from PVBM:
+(These include Crop_HRF, INSPIRE, and UNAF.)
+
+.. code-block:: python
+
+   from PVBM.Datasets import PVBM_Datasets
+   path_to_save_datasets = "../PVBM_datasets"
+   dataset_downloader = PVBM_Datasets()
+   dataset_downloader.download_dataset("Crop_HRF", path_to_save_datasets)
+   dataset_downloader.download_dataset("INSPIRE", path_to_save_datasets)
+   dataset_downloader.download_dataset("UNAF", path_to_save_datasets)
+   print("Images downloaded successfully")
+
 Optic Disc Segmentation
 =======================
 
@@ -165,21 +181,6 @@ Central Retinal Equivalent Analysis
 
    print(f"CRAE_H: {craeh}, CRAE_K: {craek},CRVE_H: {crveh}, CRVE_K: {crvek}, AVR_H: {AVR_h}, AVR_K: {AVR_k} ")
 
-Artery/Veins Blood Vessel Segmentation Datasets
-===============================================
-
-You can access the external test set used in the LUNet paper directly from PVBM:
-(These include Crop_HRF, INSPIRE, and UNAF.)
-
-.. code-block:: python
-
-   from PVBM.Datasets import PVBM_Datasets
-   path_to_save_datasets = "../PVBM_datasets"
-   dataset_downloader = PVBM_Datasets()
-   dataset_downloader.download_dataset("Crop_HRF", path_to_save_datasets)
-   dataset_downloader.download_dataset("INSPIRE", path_to_save_datasets)
-   dataset_downloader.download_dataset("UNAF", path_to_save_datasets)
-   print("Images downloaded successfully")
 
 Citation
 ========

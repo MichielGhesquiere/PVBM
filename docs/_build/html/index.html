@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PVBM: A Python Vasculature Biomarker Toolbox Based on Retinal Blood Vessel Segmentation &mdash; PVBM 2.9.7 documentation</title>
+  <title>PVBM: A Python Vasculature Biomarker Toolbox Based on Retinal Blood Vessel Segmentation &mdash; PVBM 2.9.8 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -121,6 +121,20 @@
 </ul>
 <p>Look at the <a class="reference external" href="https://github.com/aim-lab/PVBM/blob/main/pvbmtutorial.ipynb">tutorial</a> for a code example.</p>
 </section>
+<section id="artery-veins-blood-vessel-segmentation-datasets">
+<h2>Artery/Veins Blood Vessel Segmentation Datasets<a class="headerlink" href="#artery-veins-blood-vessel-segmentation-datasets" title="Permalink to this heading"></a></h2>
+<p>You can access the external test set used in the LUNet paper directly from PVBM:
+(These include Crop_HRF, INSPIRE, and UNAF.)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PVBM.Datasets</span> <span class="kn">import</span> <span class="n">PVBM_Datasets</span>
+<span class="n">path_to_save_datasets</span> <span class="o">=</span> <span class="s2">&quot;../PVBM_datasets&quot;</span>
+<span class="n">dataset_downloader</span> <span class="o">=</span> <span class="n">PVBM_Datasets</span><span class="p">()</span>
+<span class="n">dataset_downloader</span><span class="o">.</span><span class="n">download_dataset</span><span class="p">(</span><span class="s2">&quot;Crop_HRF&quot;</span><span class="p">,</span> <span class="n">path_to_save_datasets</span><span class="p">)</span>
+<span class="n">dataset_downloader</span><span class="o">.</span><span class="n">download_dataset</span><span class="p">(</span><span class="s2">&quot;INSPIRE&quot;</span><span class="p">,</span> <span class="n">path_to_save_datasets</span><span class="p">)</span>
+<span class="n">dataset_downloader</span><span class="o">.</span><span class="n">download_dataset</span><span class="p">(</span><span class="s2">&quot;UNAF&quot;</span><span class="p">,</span> <span class="n">path_to_save_datasets</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Images downloaded successfully&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="optic-disc-segmentation">
 <h2>Optic Disc Segmentation<a class="headerlink" href="#optic-disc-segmentation" title="Permalink to this heading"></a></h2>
 <p>We have included an optic disc segmenter to perform more accurate VBM estimation. This has been done using LUNet.</p>
@@ -202,20 +216,6 @@
 <span class="n">AVR_k</span> <span class="o">=</span> <span class="n">craek</span><span class="o">/</span><span class="n">crvek</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CRAE_H: </span><span class="si">{</span><span class="n">craeh</span><span class="si">}</span><span class="s2">, CRAE_K: </span><span class="si">{</span><span class="n">craek</span><span class="si">}</span><span class="s2">,CRVE_H: </span><span class="si">{</span><span class="n">crveh</span><span class="si">}</span><span class="s2">, CRVE_K: </span><span class="si">{</span><span class="n">crvek</span><span class="si">}</span><span class="s2">, AVR_H: </span><span class="si">{</span><span class="n">AVR_h</span><span class="si">}</span><span class="s2">, AVR_K: </span><span class="si">{</span><span class="n">AVR_k</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
-<section id="artery-veins-blood-vessel-segmentation-datasets">
-<h2>Artery/Veins Blood Vessel Segmentation Datasets<a class="headerlink" href="#artery-veins-blood-vessel-segmentation-datasets" title="Permalink to this heading"></a></h2>
-<p>You can access the external test set used in the LUNet paper directly from PVBM:
-(These include Crop_HRF, INSPIRE, and UNAF.)</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PVBM.Datasets</span> <span class="kn">import</span> <span class="n">PVBM_Datasets</span>
-<span class="n">path_to_save_datasets</span> <span class="o">=</span> <span class="s2">&quot;../PVBM_datasets&quot;</span>
-<span class="n">dataset_downloader</span> <span class="o">=</span> <span class="n">PVBM_Datasets</span><span class="p">()</span>
-<span class="n">dataset_downloader</span><span class="o">.</span><span class="n">download_dataset</span><span class="p">(</span><span class="s2">&quot;Crop_HRF&quot;</span><span class="p">,</span> <span class="n">path_to_save_datasets</span><span class="p">)</span>
-<span class="n">dataset_downloader</span><span class="o">.</span><span class="n">download_dataset</span><span class="p">(</span><span class="s2">&quot;INSPIRE&quot;</span><span class="p">,</span> <span class="n">path_to_save_datasets</span><span class="p">)</span>
-<span class="n">dataset_downloader</span><span class="o">.</span><span class="n">download_dataset</span><span class="p">(</span><span class="s2">&quot;UNAF&quot;</span><span class="p">,</span> <span class="n">path_to_save_datasets</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Images downloaded successfully&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
