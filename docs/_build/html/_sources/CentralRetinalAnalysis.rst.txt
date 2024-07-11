@@ -1,4 +1,4 @@
-Central Retinal Analysis
+CentralRetinalAnalysis
 ===============
 
 .. automodule:: PVBM.CentralRetinalAnalysis
