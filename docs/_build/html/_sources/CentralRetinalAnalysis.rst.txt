@@ -1,4 +1,4 @@
-FractalAnalysis
+Central Retinal Analysis
 ===============
 
 .. automodule:: PVBM.CentralRetinalAnalysis
