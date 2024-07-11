@@ -19,7 +19,7 @@
   <a>Joachim A. Behar</a>
 </p>
 
-![Pipeline](figures/pipeline.png)
+![Pipeline](https://github.com/aim-lab/PVBM/blob/main/figures/pipeline.png)
 
 ### Installation
 
