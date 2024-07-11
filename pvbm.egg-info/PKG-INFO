@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pvbm
-Version: 2.9.4
+Version: 2.9.7
 Summary: Python Vasculature Biomarker toolbox
 Home-page: https://github.com/aim-lab/PVBM
 Author: Jonathan Fhima, Yevgeniy Men
@@ -86,10 +86,85 @@ from PVBM.DiscSegmenter import DiscSegmenter
 segmenter = DiscSegmenter()
 
 # Define the segmentation path and replace specific parts of the path
-segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
-optic_disc = segmenter.segment(str(segmentation_path))
-
+image_path = '../PVBM_datasets/INSPIRE/images/image13.png'
+# Extract the segmentation
+optic_disc = segmenter.segment(image_path)
+#Extract the optic disc features
+center, radius, roi, zones_ABC = segmenter.post_processing(optic_disc, max_roi_size = 600)
 ```
+
+### Geometrical VBMs
+```python
+### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
+
+from PVBM.GeometryAnalysis import GeometricalVBMs #Import the geometry analysis module
+#Preprocessing and roi extraction
+blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
+segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
+skeleton = skeletonize(segmentation)*1
+segmentation_roi = segmentation * (1-zones_ABC[:,:,1]/255)
+segmentation_roi = segmentation_roi * roi[:,:,1]/255
+skeleton_roi = skeleton * (1-zones_ABC[:,:,1]/255)
+skeleton_roi = skeleton_roi * roi[:,:,1]/255
+
+geometricalVBMs = GeometricalVBMs() #Instanciate a geometrical VBM object
+vbms, visual = geometricalVBMs.compute_geomVBMs(segmentation_roi, skeleton_roi, center[0], center[1], radius)
+area, TI, medTor, ovlen, medianba, startp, endp, interp = vbms
+```
+
+### Fractal Analysis
+```python
+### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
+
+from PVBM.FractalAnalysis import MultifractalVBMs
+#Preprocessing and roi extraction
+blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
+segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
+segmentation_roi = segmentation * (1-zones_ABC[:,:,1]/255)
+segmentation_roi = segmentation_roi * roi[:,:,1]/255
+
+fractalVBMs = MultifractalVBMs(n_rotations = 25,optimize = True, min_proba = 0.0001, maxproba = 0.9999)
+D0,D1,D2,SL = fractalVBMs.compute_multifractals(segmentation_roi.copy())
+```
+
+### Central Retinal Equivalent Analysis
+
+```python
+### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
+
+from PVBM.CentralRetinalAnalysis import CREVBMs
+#Preprocessing and roi extraction
+zone_A_ = zones_ABC[:,:,1]/255
+zone_B_ = zones_ABC[:,:,0]/255
+zone_C_ = zones_ABC[:,:,2]/255
+roi = (zone_C_ - zone_B_)
+creVBMs = CREVBMs()
+
+####Artery
+blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
+segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
+skeleton = skeletonize(segmentation)*1
+segmentation_roi = (segmentation * roi)
+skeleton_roi = (skeleton * roi)
+out = creVBMs.compute_central_retinal_equivalents(segmentation_roi.copy(), skeleton_roi.copy(),center[0],center[1], radius, artery = True, Toplot = True )
+craek, craeh = out["craek"], out["craeh"]
+
+####Veins
+blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/veins/image13.png'
+segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
+skeleton = skeletonize(segmentation)*1
+segmentation_roi = (segmentation * roi)
+skeleton_roi = (skeleton * roi)
+out = creVBMs.compute_central_retinal_equivalents(segmentation_roi.copy(), skeleton_roi.copy(),center[0],center[1], radius, artery = False, Toplot = True )
+crvek, crveh = out["crvek"], out["crveh"]
+
+AVR_h = craeh/crveh
+AVR_k = craek/crvek
+
+print(f"CRAE_H: {craeh}, CRAE_K: {craek},CRVE_H: {crveh}, CRVE_K: {crvek}, AVR_H: {AVR_h}, AVR_K: {AVR_k} ")
+```
+
+
 
 ### Artery/Veins Blood Vessel Segmentation Datasets
 
