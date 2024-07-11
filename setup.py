@@ -17,7 +17,7 @@ def read_readme(file_name):
 long_description = read_readme("README.md")
 
 # Define the URL to your model file on GitHub
-model_url = 'https://github.com/aim-lab/PVBM/releases/download/v1.0.0/lunetv2_odc.onnx'
+model_url = 'https://github.com/aim-lab/PVBM/raw/main/PVBM/lunetv2_odc.onnx?download='
 model_path = os.path.join(os.path.dirname(__file__), 'PVBM', 'lunetv2_odc.onnx')
 
 # Download the model if it does not exist
