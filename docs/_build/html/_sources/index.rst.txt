@@ -32,10 +32,12 @@ Jonathan Fhima • Jan Van Eijgen • Ingeborg Stalmans • Yevgeniy Men • Mot
    :caption: Contents:
    :hidden:
 
-   GeometryAnalysis
-   FractalAnalysis
    Datasets
    DiscSegmenter
+   GeometryAnalysis
+   FractalAnalysis
+   CentralRetinalAnalysis
+
    pvbmtutorial
 
 
