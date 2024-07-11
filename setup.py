@@ -8,7 +8,7 @@ long_description = read_readme("README.md")
 
 setup(
     name='pvbm',
-    version='2.9.2',
+    version='2.9.3',
     packages=find_packages(),
     install_requires=[
         "numpy",
@@ -21,6 +21,10 @@ setup(
         "opencv-python"
 
     ],
+    package_data={
+        'PVBM': ['lunetv2_odc.onnx'],
+    },
+    include_package_data=True,
     author='Jonathan Fhima, Yevgeniy Men',
     author_email='jonathanfh@campus.technion.ac.il',
     description="Python Vasculature Biomarker toolbox",
