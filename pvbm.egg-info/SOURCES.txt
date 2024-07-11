@@ -1,4 +1,5 @@
 LICENSE
+MANIFEST.in
 README.md
 setup.py
 PVBM/CentralRetinalAnalysis.py
@@ -9,6 +10,7 @@ PVBM/GeometricalAnalysis.py
 PVBM/GeometryAnalysis.py
 PVBM/__init__.py
 PVBM/debug.py
+PVBM/lunetv2_odc.onnx
 PVBM/GraphCRE/GraphCentralRetinalEquivalent.py
 PVBM/GraphCRE/__init__.py
 PVBM/GraphRegularisation/GraphRegularisation.py
