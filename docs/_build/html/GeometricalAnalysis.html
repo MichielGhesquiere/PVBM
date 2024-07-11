@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GeometricalAnalysis &mdash; PVBM 1.0 documentation</title>
+  <title>GeometricalAnalysis &mdash; PVBM 2.9.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -18,9 +18,7 @@
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="FractalAnalysis" href="FractalAnalysis.html" />
-    <link rel="prev" title="Python Vasculature BioMarker Toolbox" href="index.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,19 +41,11 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">GeometricalAnalysis</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#PVBM.GeometricalAnalysis.GeometricalVBMs"><code class="docutils literal notranslate"><span class="pre">GeometricalVBMs</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#PVBM.GeometricalAnalysis.GeometricalVBMs.area"><code class="docutils literal notranslate"><span class="pre">GeometricalVBMs.area()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#PVBM.GeometricalAnalysis.GeometricalVBMs.compute_branching_angles"><code class="docutils literal notranslate"><span class="pre">GeometricalVBMs.compute_branching_angles()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#PVBM.GeometricalAnalysis.GeometricalVBMs.compute_particular_points"><code class="docutils literal notranslate"><span class="pre">GeometricalVBMs.compute_particular_points()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#PVBM.GeometricalAnalysis.GeometricalVBMs.compute_perimeter"><code class="docutils literal notranslate"><span class="pre">GeometricalVBMs.compute_perimeter()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#PVBM.GeometricalAnalysis.GeometricalVBMs.compute_tortuosity_length"><code class="docutils literal notranslate"><span class="pre">GeometricalVBMs.compute_tortuosity_length()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GeometryAnalysis.html">GeometryAnalysis</a></li>
 <li class="toctree-l1"><a class="reference internal" href="FractalAnalysis.html">FractalAnalysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Datasets.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DiscSegmenter.html">DiscSegmenter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pvbmtutorial.html">PVBM Tutorial</a></li>
 </ul>
 
@@ -89,6 +79,9 @@
 <dt class="sig sig-object py" id="PVBM.GeometricalAnalysis.GeometricalVBMs">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PVBM.GeometricalAnalysis.</span></span><span class="sig-name descname"><span class="pre">GeometricalVBMs</span></span><a class="reference internal" href="_modules/PVBM/GeometricalAnalysis.html#GeometricalVBMs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PVBM.GeometricalAnalysis.GeometricalVBMs" title="Permalink to this definition"></a></dt>
 <dd><p>A class that can perform geometrical biomarker computation for a fundus image.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2.9.0: </span>This class will be removed in version 3.0. Use <cite>GeometryAnalysis.GeometricalVBMs</cite> instead.</p>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="PVBM.GeometricalAnalysis.GeometricalVBMs.area">
 <span class="sig-name descname"><span class="pre">area</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segmentation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/PVBM/GeometricalAnalysis.html#GeometricalVBMs.area"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#PVBM.GeometricalAnalysis.GeometricalVBMs.area" title="Permalink to this definition"></a></dt>
@@ -207,10 +200,7 @@ This function computes the number of endpoints and intersection points of the fu
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Python Vasculature BioMarker Toolbox" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="FractalAnalysis.html" class="btn btn-neutral float-right" title="FractalAnalysis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

@@ -8,14 +8,18 @@ long_description = read_readme("README.md")
 
 setup(
     name='pvbm',
-    version='2.4.0',
+    version='2.9.0',
     packages=find_packages(),
     install_requires=[
         "numpy",
         "scipy",
         "scikit-image",
-        "pillow"
-        
+        "pillow",
+        "gdown",
+        "onnxruntime",
+        "torchvision",
+        "opencv-python"
+
     ],
     author='Jonathan Fhima, Yevgeniy Men',
     author_email='jonathanfh@campus.technion.ac.il',

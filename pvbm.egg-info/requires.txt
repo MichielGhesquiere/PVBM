@@ -2,3 +2,7 @@ numpy
 scipy
 scikit-image
 pillow
+gdown
+onnxruntime
+torchvision
+opencv-python

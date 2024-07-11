@@ -4,11 +4,27 @@ from scipy.signal import convolve2d
 from PVBM.helpers.tortuosity import compute_tortuosity
 from PVBM.helpers.perimeter import compute_perimeter_
 from PVBM.helpers.branching_angle import compute_angles_dictionary
-#from PVBM.helpers.far import far
+import warnings
 
 class GeometricalVBMs:
-    """A class that can perform geometrical biomarker computation for a fundus image.
     """
+    A class that can perform geometrical biomarker computation for a fundus image.
+
+    .. deprecated:: 2.9.0
+       This class will be removed in version 3.0. Use `GeometryAnalysis.GeometricalVBMs` instead.
+    """
+
+    def __init__(self):
+        super(GeometricalVBMs, self).__init__()
+
+        warnings.warn(
+            "The GeometricalVBMs class is deprecated and will be removed in version 3.0. "
+            "Use GeometryAnalysis.GeometricalVBMs instead.",
+            DeprecationWarning,
+            stacklevel=2
+        )
+
+
 
     def area(self,segmentation):
         """
