@@ -1,9 +1,10 @@
+import os
+import requests
 import onnxruntime as ort
 import numpy as np
 import PIL
 from PIL import Image
 from torchvision import transforms
-import os
 import cv2
 
 class DiscSegmenter:
@@ -14,6 +15,22 @@ class DiscSegmenter:
         self.img_size = 512
         script_dir = os.path.dirname(os.path.abspath(__file__))
         self.model_path = os.path.join(script_dir, "lunetv2_odc.onnx")
+        self.download_model()
+
+    def download_model(self):
+        """Download the ONNX model if it does not exist."""
+        model_url = 'https://github.com/aim-lab/PVBM/raw/main/PVBM/lunetv2_odc.onnx'
+        print(f"Model path: {self.model_path}")
+        if not os.path.exists(self.model_path):
+            print(f"Downloading model from {model_url}...")
+            response = requests.get(model_url, stream=True)
+            response.raise_for_status()
+            with open(self.model_path, 'wb') as f:
+                for chunk in response.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            print(f'Model downloaded to {self.model_path}')
+        else:
+            print("Model already exists, skipping download.")
 
     def find_biggest_contour(self, contours):
         """
