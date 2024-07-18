@@ -95,6 +95,9 @@ center, radius, roi, zones_ABC = segmenter.post_processing(optic_disc, max_roi_s
 ### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
 
 from PVBM.GeometryAnalysis import GeometricalVBMs #Import the geometry analysis module
+import numpy as np
+from skimage.morphology import skeletonize
+from PIL import Image
 #Preprocessing and roi extraction
 blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
 segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
@@ -114,6 +117,9 @@ area, TI, medTor, ovlen, medianba, startp, endp, interp = vbms
 ### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
 
 from PVBM.FractalAnalysis import MultifractalVBMs
+import numpy as np
+from PIL import Image
+
 #Preprocessing and roi extraction
 blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
 segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
@@ -130,6 +136,9 @@ D0,D1,D2,SL = fractalVBMs.compute_multifractals(segmentation_roi.copy())
 ### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
 
 from PVBM.CentralRetinalAnalysis import CREVBMs
+import numpy as np
+from skimage.morphology import skeletonize
+from PIL import Image
 #Preprocessing and roi extraction
 zone_A_ = zones_ABC[:,:,1]/255
 zone_B_ = zones_ABC[:,:,0]/255
@@ -185,24 +194,4 @@ If you find this code or data to be useful for your research, please consider ci
         publisher={IOP Publishing}
     }
 
-    @INPROCEEDINGS{10081641,
-        author={Fhima, Jonathan and Van Eijgen, Jan and Freiman, Moti and Stalmans, Ingeborg and Behar, Joachim A},
-        booktitle={2022 Computing in Cardiology (CinC)}, 
-        title={Lirot.ai: A Novel Platform for Crowd-Sourcing Retinal Image Segmentations}, 
-        year={2022},
-        volume={498},
-        number={},
-        pages={1-4},
-        keywords={Performance evaluation;Deep learning;Image segmentation;Databases;Data science;Retina;Data models},
-        doi={10.22489/CinC.2022.060}}
-
-    @article{abramovich2023fundusq,
-      title={FundusQ-Net: A regression quality assessment deep learning algorithm for fundus images quality grading},
-      author={Abramovich, Or and Pizem, Hadas and Van Eijgen, Jan and Oren, Ilan and Melamed, Joshua and Stalmans, Ingeborg and Blumenthal, Eytan Z and Behar, Joachim A},
-      journal={Computer Methods and Programs in Biomedicine},
-      volume={239},
-      pages={107522},
-      year={2023},
-      publisher={Elsevier}
-    }
 
