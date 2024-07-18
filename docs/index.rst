@@ -209,25 +209,3 @@ If you find this code or data to be useful for your research, please consider ci
        year={2024},
        publisher={IOP Publishing}
    }
-
-   @INPROCEEDINGS{10081641,
-       author={Fhima, Jonathan and Van Eijgen, Jan and Freiman, Moti and Stalmans, Ingeborg and Behar, Joachim A},
-       booktitle={2022 Computing in Cardiology (CinC)},
-       title={Lirot.ai: A Novel Platform for Crowd-Sourcing Retinal Image Segmentations},
-       year={2022},
-       volume={498},
-       number={},
-       pages={1-4},
-       keywords={Performance evaluation;Deep learning;Image segmentation;Databases;Data science;Retina;Data models},
-       doi={10.22489/CinC.2022.060}}
-
-   @article{abramovich2023fundusq,
-     title={FundusQ-Net: A regression quality assessment deep learning algorithm for fundus images quality grading},
-     author={Abramovich, Or and Pizem, Hadas and Van Eijgen, Jan and Oren, Ilan and Melamed, Joshua and Stalmans, Ingeborg and Blumenthal, Eytan Z and Behar, Joachim A},
-     journal={Computer Methods and Programs in Biomedicine},
-     volume={239},
-     pages={107522},
-     year={2023},
-     publisher={Elsevier}
-   }
-
