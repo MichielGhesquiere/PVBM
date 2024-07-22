@@ -3,7 +3,7 @@ import os
 import zipfile
 
 
-class PVBM_Datasets:
+class PVBMDataDownloader:
     """A class that downloads the PVBM datasets."""
     def __init__(self):
         self.file_ids = {

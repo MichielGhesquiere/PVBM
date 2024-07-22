@@ -156,6 +156,33 @@ class CREVBMs:
         """
         return 0.95 * (w1 ** 2 + w2 ** 2) ** 0.5
 
+
+    def apply_roi(self, segmentation, skeleton, zones_ABC):
+        """
+        Apply a region of interest (ROI) mask to the segmentation and skeleton images.
+
+        :param segmentation: The segmentation image containing binary values within {0, 1}.
+        :type segmentation: np.array
+        :param skeleton: The skeleton image containing binary values within {0, 1}.
+        :type skeleton: np.array
+        :param zones_ABC: A mask image used to exclude specific zones, where the second channel defines the exclusion areas.
+        :type zones_ABC: np.array
+
+        :return: A tuple containing:
+            - The modified segmentation image with the ROI applied.
+            - The modified skeleton image with the ROI applied.
+        :rtype: Tuple[np.array, np.array]
+        """
+        zone_A_ = zones_ABC[:, :, 1] / 255
+        zone_B_ = zones_ABC[:, :, 0] / 255
+        zone_C_ = zones_ABC[:, :, 2] / 255
+        roi = (zone_C_ - zone_B_)
+        segmentation_roi = (segmentation * roi)
+        skeleton_roi = (skeleton * roi)
+
+
+        return segmentation_roi, skeleton_roi
+
     def compute_central_retinal_equivalents(self,blood_vessel, skeleton, xc,yc, radius, artery = True, Toplot = False):
         """
         Compute the CRAE or CRVE equivalent for a given blood vessel graph.

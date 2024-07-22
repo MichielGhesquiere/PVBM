@@ -63,12 +63,12 @@ You can access the external test set used in the LUNet paper directly from PVBM:
 (These include Crop_HRF, INSPIRE, and UNAF.)
 
 ```python
-from PVBM.Datasets import PVBM_Datasets
+from PVBM.Datasets import PVBMDataDownloader
 path_to_save_datasets = "../PVBM_datasets"
-dataset_downloader = PVBM_Datasets()
-dataset_downloader.download_dataset("Crop_HRF", path_to_save_datasets)
-dataset_downloader.download_dataset("INSPIRE", path_to_save_datasets)
-dataset_downloader.download_dataset("UNAF", path_to_save_datasets)
+dataset_downloader = PVBMDataDownloader()
+dataset_downloader.download_dataset(name="Crop_HRF", save_folder_path=path_to_save_datasets)
+dataset_downloader.download_dataset(name="INSPIRE", save_folder_path=path_to_save_datasets)
+dataset_downloader.download_dataset(name="UNAF", save_folder_path=path_to_save_datasets)
 print("Images downloaded successfully")
 ```
 
@@ -85,9 +85,9 @@ segmenter = DiscSegmenter()
 # Define the segmentation path and replace specific parts of the path
 image_path = '../PVBM_datasets/INSPIRE/images/image13.png'
 # Extract the segmentation
-optic_disc = segmenter.segment(image_path)
+optic_disc = segmenter.segment(image_path=image_path)
 #Extract the optic disc features
-center, radius, roi, zones_ABC = segmenter.post_processing(optic_disc, max_roi_size = 600)
+center, radius, roi, zones_ABC = segmenter.post_processing(segmentation=optic_disc, max_roi_size = 600)
 ```
 
 ### Geometrical VBMs
@@ -102,30 +102,31 @@ from PIL import Image
 blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
 segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
 skeleton = skeletonize(segmentation)*1
-segmentation_roi = segmentation * (1-zones_ABC[:,:,1]/255)
-segmentation_roi = segmentation_roi * roi[:,:,1]/255
-skeleton_roi = skeleton * (1-zones_ABC[:,:,1]/255)
-skeleton_roi = skeleton_roi * roi[:,:,1]/255
-
 geometricalVBMs = GeometricalVBMs() #Instanciate a geometrical VBM object
-vbms, visual = geometricalVBMs.compute_geomVBMs(segmentation_roi, skeleton_roi, center[0], center[1], radius)
+segmentation_roi, skeleton_roi = geometricalVBMs.apply_roi(
+    segmentation=segmentation, 
+    skeleton=skeleton,
+    zones_ABC=zones_ABC,
+    roi=roi
+)
+vbms, visual = geometricalVBMs.compute_geomVBMs(
+    blood_vessel=segmentation_roi,
+    skeleton=skeleton_roi,
+    xc=center[0],
+    yc=center[1],
+    radius=radius
+)
 area, TI, medTor, ovlen, medianba, startp, endp, interp = vbms
 ```
 
 ### Fractal Analysis
 ```python
 ### First run the optic disc segmentation snippet to extract center, radius, roi, zones_ABC
+### Then compute the segmentation_roi array as done in the previous code snippet
 
 from PVBM.FractalAnalysis import MultifractalVBMs
 import numpy as np
 from PIL import Image
-
-#Preprocessing and roi extraction
-blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
-segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
-segmentation_roi = segmentation * (1-zones_ABC[:,:,1]/255)
-segmentation_roi = segmentation_roi * roi[:,:,1]/255
-
 fractalVBMs = MultifractalVBMs(n_rotations = 25,optimize = True, min_proba = 0.0001, maxproba = 0.9999)
 D0,D1,D2,SL = fractalVBMs.compute_multifractals(segmentation_roi.copy())
 ```
@@ -140,28 +141,48 @@ import numpy as np
 from skimage.morphology import skeletonize
 from PIL import Image
 #Preprocessing and roi extraction
-zone_A_ = zones_ABC[:,:,1]/255
-zone_B_ = zones_ABC[:,:,0]/255
-zone_C_ = zones_ABC[:,:,2]/255
-roi = (zone_C_ - zone_B_)
 creVBMs = CREVBMs()
 
 ####Artery
 blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/artery/image13.png'
 segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
 skeleton = skeletonize(segmentation)*1
-segmentation_roi = (segmentation * roi)
-skeleton_roi = (skeleton * roi)
-out = creVBMs.compute_central_retinal_equivalents(segmentation_roi.copy(), skeleton_roi.copy(),center[0],center[1], radius, artery = True, Toplot = True )
+segmentation_roi, skeleton_roi = creVBMs.apply_roi(
+    segmentation=segmentation,
+    skeleton=skeleton,
+    zones_ABC=zones_ABC
+)
+out = creVBMs.compute_central_retinal_equivalents(
+    blood_vessel=segmentation_roi.copy(),
+    skeleton=skeleton_roi.copy(),
+    xc=center[0],
+    yc=center[1],
+    radius=radius,
+    artery = True,
+    Toplot = False #This allows to generate the CRE visualisation but require a lot of RAM
+    # If you are only interested about the VBMs values then set Toplot to False
+)
 craek, craeh = out["craek"], out["craeh"]
 
 ####Veins
 blood_vessel_segmentation_path = '../PVBM_datasets/INSPIRE/veins/image13.png'
 segmentation = np.array(Image.open(blood_vessel_segmentation_path))/255 #Open the segmentation
 skeleton = skeletonize(segmentation)*1
-segmentation_roi = (segmentation * roi)
-skeleton_roi = (skeleton * roi)
-out = creVBMs.compute_central_retinal_equivalents(segmentation_roi.copy(), skeleton_roi.copy(),center[0],center[1], radius, artery = False, Toplot = True )
+segmentation_roi, skeleton_roi = creVBMs.apply_roi(
+    segmentation=segmentation,
+    skeleton=skeleton,
+    zones_ABC=zones_ABC
+)
+out = creVBMs.compute_central_retinal_equivalents(
+    blood_vessel=segmentation_roi.copy(),
+    skeleton=skeleton_roi.copy(),
+    xc=center[0],
+    yc=center[1],
+    radius=radius,
+    artery = False,
+    Toplot = False #This allows to generate the CRE visualisation but require a lot of RAM
+    # If you are only interested about the VBMs values then set Toplot to False
+)
 crvek, crveh = out["crvek"], out["crveh"]
 
 AVR_h = craeh/crveh

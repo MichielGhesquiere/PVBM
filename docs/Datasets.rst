@@ -3,7 +3,7 @@ Datasets
 
 .. automodule:: PVBM.Datasets
 
-.. autoclass:: PVBM_Datasets
+.. autoclass:: PVBMDataDownloader
    :members: None
 
    .. automethod:: download_dataset

@@ -171,6 +171,32 @@ class GeometricalVBMs:
                                     j_or, dico, bacount + 1, bapos, distance + dist)
 
 
+    def apply_roi(self, segmentation, skeleton, zones_ABC, roi):
+        """
+        Apply a region of interest (ROI) mask to the segmentation and skeleton images.
+
+        :param segmentation: The segmentation image containing binary values within {0, 1}.
+        :type segmentation: np.array
+        :param skeleton: The skeleton image containing binary values within {0, 1}.
+        :type skeleton: np.array
+        :param zones_ABC: A mask image used to exclude specific zones, where the second channel defines the exclusion areas.
+        :type zones_ABC: np.array
+        :param roi: The region of interest mask, where the second channel defines the ROI areas.
+        :type roi: np.array
+
+        :return: A tuple containing:
+            - The modified segmentation image with the ROI applied.
+            - The modified skeleton image with the ROI applied.
+        :rtype: Tuple[np.array, np.array]
+        """
+        segmentation_roi = segmentation * (1 - zones_ABC[:, :, 1] / 255)
+        segmentation_roi = segmentation_roi * roi[:, :, 1] / 255
+
+        skeleton_roi = skeleton * (1 - zones_ABC[:, :, 1] / 255)
+        skeleton_roi = skeleton_roi * roi[:, :, 1] / 255
+
+        return segmentation_roi, skeleton_roi
+
     def compute_geomVBMs(self,blood_vessel, skeleton, xc,yc, radius):
         """
         Compute various geometrical vascular biomarkers (VBMs) for a given blood vessel graph.
@@ -265,18 +291,29 @@ class GeometricalVBMs:
         angles = []
         for key, value in angles_dico.items():
             b = key
-            if len(value) > 1:
+            if len(value) == 2:
                 a, c = value[0], value[1]
-                if b != None and c != None and a != None:
-                    b = np.array(b)
-                    a = np.array(a)
-                    c = np.array(c)
-                    ba = a - b
-                    bc = c - b
-
+                if all(x is not None for x in (a, b, c)):
+                    ba = np.array(a) - np.array(b)
+                    bc = np.array(c) - np.array(b)
                     cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
                     angle = np.arccos(cosine_angle)
                     angles.append(np.degrees(angle))
+            elif len(value) == 3:
+                a, c, d = value
+                if all(x is not None for x in (a, b, c, d)):
+                    ba = np.array(a) - np.array(b)
+                    bc = np.array(c) - np.array(b)
+                    cosine_angle_ac = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))
+                    angle_ac = np.arccos(cosine_angle_ac)
+                    angles.append(np.degrees(angle_ac))
+
+                    bc = np.array(c) - np.array(b)
+                    bd = np.array(d) - np.array(b)
+                    cosine_angle_cd = np.dot(bc, bd) / (np.linalg.norm(bc) * np.linalg.norm(bd))
+                    angle_cd = np.arccos(cosine_angle_cd)
+                    angles.append(np.degrees(angle_cd))
+
         ####Computing the median branching angles, the number of start/inter/endpoints
         medianba = np.median(angles)
         startp = len(starting_point_list)

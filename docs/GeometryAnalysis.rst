@@ -7,3 +7,4 @@ GeometryAnalysis
    :members: None
 
    .. automethod:: compute_geomVBMs
+   .. automethod:: apply_roi
